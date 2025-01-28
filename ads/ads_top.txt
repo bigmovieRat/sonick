@@ -1,0 +1,10 @@
+<script type="text/javascript">
+	atOptions = {
+		'key' : '575984b8d0cc834e0419333ac78b1b57',
+		'format' : 'iframe',
+		'height' : 250,
+		'width' : 300,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//verseexposurethanksgiving.com/575984b8d0cc834e0419333ac78b1b57/invoke.js"></script>
