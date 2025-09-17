@@ -27,8 +27,12 @@ img {
 <script>
   const urlParams = new URLSearchParams(window.location.search);
   const live = urlParams.get('live') || 'default.png';
-  const url = 'https://plinat.xyz/' + encodeURIComponent(live);
-  document.getElementById('preview').src = url;
+
+  // URL asli tetep ke plinat.xyz
+  const realUrl = 'https://plinat.xyz/' + encodeURIComponent(live);
+
+  // pasang ke <img>
+  document.getElementById('preview').src = realUrl;
 </script>
 
 </body>
