@@ -1,1 +1,111 @@
-SUSUSUSD
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Upload To MP4,JPG</title>
+<style>
+body { font-family: Arial; background:#111; color:#eee; text-align:center; padding:50px; }
+h2 { color:#0f0; }
+input[type=file] { padding:10px; background:#222; color:#eee; border:1px solid #333; border-radius:5px; }
+button { margin-top:15px; padding:10px 20px; background:#0f0; color:#111; border:none; border-radius:5px; cursor:pointer; font-weight:bold; }
+button:hover { background:#0c0; }
+#progressBar { width:60%; margin:20px auto; height:20px; background:#333; border-radius:10px; overflow:hidden; display:none; position:relative; }
+#progressFill { height:100%; width:0%; background:#0f0; transition: width 0.3s; }
+#percentText { position:absolute; width:100%; top:0; color:#111; font-weight:bold; line-height:20px; }
+a { color:#0f0; text-decoration:none; }
+img, video { max-width:300px; margin-top:10px; }
+</style>
+</head>
+<body>
+
+<h2>🚀 Upload To MP4,JPG</h2>
+<input type="file" id="fileInput">
+<br><br>
+<button id="uploadBtn">Upload</button>
+<br><br>
+Upload Limit 100Mb
+
+<div id="progressBar">
+    <div id="progressFill"></div>
+    <div id="percentText">0%</div>
+</div>
+
+<div id="result"></div>
+
+<script>
+document.getElementById('uploadBtn').addEventListener('click', function() {
+    const fileInput = document.getElementById('fileInput');
+    const file = fileInput.files[0];
+    if (!file) return alert('Select the file first bro!!');
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'https://api.aceimg.com/api/upload', true);
+
+    const progressBar = document.getElementById('progressBar');
+    const progressFill = document.getElementById('progressFill');
+    const percentText = document.getElementById('percentText');
+    const resultDiv = document.getElementById('result');
+
+    progressBar.style.display = 'block';
+    progressFill.style.width = '0%';
+    percentText.textContent = '0%';
+    resultDiv.innerHTML = '';
+
+    xhr.upload.addEventListener('progress', function(e) {
+        if (e.lengthComputable) {
+            let percent = Math.round((e.loaded / e.total) * 100);
+            progressFill.style.width = percent + '%';
+            percentText.textContent = percent + '%';
+        }
+    });
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            try {
+                const res = JSON.parse(xhr.responseText);
+                if (res.status === true && res.link) {
+                    // ambil filename dari link AceImg
+                    const urlParams = new URL(res.link).searchParams;
+                    const filename = urlParams.get('f');
+
+                    // bikin custom link plinat.xyz beda-beda
+                    let customLink = '';
+                    if(file.type.startsWith('image/')){
+                        customLink = 'https://plinat.xyz/image.php?live=' + filename;
+                    } else if(file.type.startsWith('video/')){
+                        customLink = 'https://plinat.xyz/movie.php?live=' + filename;
+                    }
+
+                    resultDiv.innerHTML = `✅ Upload sukses!<br>
+                        <a href="${customLink}" target="_blank">${customLink}</a><br>`;
+
+                    if(file.type.startsWith('image/')){
+                        resultDiv.innerHTML += `<img src="${customLink}">`;
+                    } else if(file.type.startsWith('video/')){
+                        resultDiv.innerHTML += `<iframe src="${customLink}" " frameborder="0" scrolling="no" allowfullscreen style="width:533px;height:300px;"></iframe>`;
+                    }
+
+                } else {
+                    resultDiv.innerHTML = `❌ Up ${res.message || 'Unknown error'}`;
+                }
+            } catch(e) {
+                resultDiv.innerHTML = `❌ Error `;
+            }
+        } else {
+            resultDiv.innerHTML = `❌ Server error: ${xhr.status}`;
+        }
+    };
+
+    xhr.onerror = function() {
+        resultDiv.innerHTML = '❌ UUpload error, try again bro.';
+    };
+
+    xhr.send(formData);
+});
+</script>
+
+</body>
+</html>
