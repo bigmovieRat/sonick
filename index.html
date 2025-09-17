@@ -71,20 +71,20 @@ document.getElementById('uploadBtn').addEventListener('click', function() {
                     const filename = urlParams.get('f');
 
                     let customLink = '';
-                    if(file.type.startsWith('image/')){
-                        customLink = 'https://bigmovierat.github.io/sonick/image.html?live=' + filename;
-                    } else if(file.type.startsWith('video/')){
-                        customLink = 'movies.html?live=' + filename;
-                    }
+                  if(file.type.startsWith('image/')){
+    customLink = 'https://bigmovierat.github.io/sonick/image.html?live=' + filename;
+} else if(file.type.startsWith('video/')){
+    customLink = 'https://bigmovierat.github.io/sonick/movies.html?live=' + filename;
+}
 
-                    resultDiv.innerHTML = `✅ Upload sukses!<br>
-                        <a href="${customLink}" target="_blank">${customLink}</a><br>`;
+resultDiv.innerHTML = `✅ Upload sukses!<br>
+    <a href="${customLink}" target="_blank">${customLink}</a><br>`;
 
-                    if(file.type.startsWith('image/')){
-                        resultDiv.innerHTML += `<img src="https://plinat.xyz/${filename}">`;
-                    } else if(file.type.startsWith('video/')){
-                        resultDiv.innerHTML += `<iframe src="${customLink}" frameborder="0" scrolling="no" allowfullscreen style="width:533px;height:300px;"></iframe>`;
-                    }
+if(file.type.startsWith('image/')){
+    resultDiv.innerHTML += `<iframe src="${customLink}" frameborder="0" scrolling="no" style="width:300px;height:300px;"></iframe>`;
+} else if(file.type.startsWith('video/')){
+    resultDiv.innerHTML += `<iframe src="${customLink}" frameborder="0" scrolling="no" allowfullscreen style="width:533px;height:300px;"></iframe>`;
+}
 
                 } else {
                     resultDiv.innerHTML = `❌ Up ${res.message || 'Unknown error'}`;
