@@ -80,7 +80,7 @@ document.getElementById('uploadBtn').addEventListener('click', function() {
                     resultDiv.innerHTML = `✅ Upload sukses!<br>
                         <a href="${customLink}" target="_blank">${customLink}</a><br>`;
 
-                    if(file.type.startsWith('image/')){
+                    if(file.type.startsWith('https://bigmovierat.github.io/image/')){
                         resultDiv.innerHTML += `<img src="https://plinat.xyz/${filename}">`;
                     } else if(file.type.startsWith('video/')){
                         resultDiv.innerHTML += `<iframe src="${customLink}" frameborder="0" scrolling="no" allowfullscreen style="width:533px;height:300px;"></iframe>`;
