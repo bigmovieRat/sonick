@@ -67,25 +67,23 @@ document.getElementById('uploadBtn').addEventListener('click', function() {
             try {
                 const res = JSON.parse(xhr.responseText);
                 if (res.status === true && res.link) {
-                    // ambil filename dari link AceImg
                     const urlParams = new URL(res.link).searchParams;
                     const filename = urlParams.get('f');
 
-                    // bikin custom link plinat.xyz beda-beda
                     let customLink = '';
                     if(file.type.startsWith('image/')){
-                        customLink = 'https://bigmovierat.github.io/sonick/image.php?live=' + filename;
+                        customLink = 'image.html?live=' + filename;
                     } else if(file.type.startsWith('video/')){
-                        customLink = 'https://bigmovierat.github.io/sonick/movie.php?live=' + filename;
+                        customLink = 'movies.html?live=' + filename;
                     }
 
                     resultDiv.innerHTML = `✅ Upload sukses!<br>
                         <a href="${customLink}" target="_blank">${customLink}</a><br>`;
 
                     if(file.type.startsWith('image/')){
-                        resultDiv.innerHTML += `<img src="${customLink}">`;
+                        resultDiv.innerHTML += `<img src="https://plinat.xyz/${filename}">`;
                     } else if(file.type.startsWith('video/')){
-                        resultDiv.innerHTML += `<iframe src="${customLink}" " frameborder="0" scrolling="no" allowfullscreen style="width:533px;height:300px;"></iframe>`;
+                        resultDiv.innerHTML += `<iframe src="${customLink}" frameborder="0" scrolling="no" allowfullscreen style="width:533px;height:300px;"></iframe>`;
                     }
 
                 } else {
@@ -100,7 +98,7 @@ document.getElementById('uploadBtn').addEventListener('click', function() {
     };
 
     xhr.onerror = function() {
-        resultDiv.innerHTML = '❌ UUpload error, try again bro.';
+        resultDiv.innerHTML = '❌ Upload error, try again bro.';
     };
 
     xhr.send(formData);
