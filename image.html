@@ -1,0 +1,7 @@
+<?php
+$live = isset($_GET['live']) ? $_GET['live'] : 'default.png';
+$url = 'https://plinat.xyz/' . basename($live);
+
+header('Content-Type: image/png'); // atau sesuai tipe gambar
+echo file_get_contents($url);
+?>
